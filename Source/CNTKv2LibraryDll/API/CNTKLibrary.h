@@ -1878,10 +1878,8 @@ namespace CNTK
             : Variable(shape, varType, dataType, value, needsGradient, dynamicAxes, /*isSparse =*/ false, name, uid)
         {}
 
-    protected:
-        CNTK_API NDArrayViewPtr Value() const;
-        CNTK_API void SetValue(const NDArrayViewPtr& value);
-
+    //protected:
+    
     private:
 #ifdef SWIGPYTHON
     public:
@@ -1889,11 +1887,14 @@ namespace CNTK
         Variable(const NDShape& shape, bool isSparse, ::CNTK::DataType dataType, bool needsGradient, const std::wstring& name, const std::vector<Axis>& dynamicAxes, const std::wstring& uid)
             : Variable(shape, VariableKind::Input, dataType, nullptr, needsGradient, dynamicAxes, isSparse, name, uid)
         {}
-
+        
         // TODO: This should be a private but if not made public, the python bindings build complains about an unresolved external
         // Probably due the above ctor being a public method in SWIG codegen
     public:
         CNTK_API Variable(const NDShape& shape, VariableKind varType, ::CNTK::DataType dataType, const NDArrayViewPtr& value, bool needsGradient, const std::vector<Axis>& dynamicAxes, bool isSparse, const std::wstring& name, const std::wstring& uid);
+        CNTK_API NDArrayViewPtr Value() const;
+        CNTK_API void SetValue(const NDArrayViewPtr& value);
+
 
 private:
         CNTK_API const Variable& BlockFunctionVariableMapping() const;
